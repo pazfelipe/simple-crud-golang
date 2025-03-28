@@ -2,6 +2,8 @@ package main
 
 import (
 	"go-api/controller"
+	"go-api/db"
+	"go-api/repository"
 	"go-api/usecase"
 
 	"github.com/gin-gonic/gin"
@@ -9,7 +11,13 @@ import (
 
 func main() {
 	server := gin.Default()
-	productUseCase := usecase.NewProductUseCase()
+	dbConnection, err := db.ConnectDB()
+	repository := repository.NewProductRepository(dbConnection)
+	productUseCase := usecase.NewProductUseCase(repository)
+
+	if err != nil {
+		panic(err)
+	}
 
 	productController := controller.NewProductController(productUseCase)
 
