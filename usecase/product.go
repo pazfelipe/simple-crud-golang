@@ -1,14 +1,20 @@
 package usecase
 
-import "go-api/model"
+import (
+	"go-api/model"
+	"go-api/repository"
+)
 
 type ProductUseCase struct {
+	repository repository.ProductRepository
 }
 
-func NewProductUseCase() ProductUseCase {
-	return ProductUseCase{}
+func NewProductUseCase(repo repository.ProductRepository) ProductUseCase {
+	return ProductUseCase{
+		repository: repo,
+	}
 }
 
 func (u *ProductUseCase) GetProducts() ([]model.Product, error) {
-	return []model.Product{}, nil
+	return u.repository.GetProducts()
 }
