@@ -61,13 +61,13 @@ func (pr *ProductRepository) CreateProduct(product model.Product) (int, error) {
 	return productID, nil
 }
 
-func (pr *ProductRepository) GetProductById(id int) (model.Product, error) {
+func (pr *ProductRepository) GetProductById(id int) (*model.Product, error) {
 	query, err := pr.connection.Prepare("SELECT * FROM products WHERE id = $1;")
 	var product model.Product
 
 	if err != nil {
 		fmt.Println(err)
-		return model.Product{}, err
+		return nil, err
 	}
 
 	defer query.Close()
@@ -75,10 +75,10 @@ func (pr *ProductRepository) GetProductById(id int) (model.Product, error) {
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return model.Product{}, fmt.Errorf("product with id %d not found", id)
+			return nil, fmt.Errorf("product with id %d not found", id)
 		}
 
-		return model.Product{}, err
+		return nil, err
 	}
-	return product, nil
+	return &product, nil
 }

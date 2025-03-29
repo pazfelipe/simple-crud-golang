@@ -77,6 +77,14 @@ func (c *controller) GetProductById(ctx *gin.Context) {
 
 	product, err := c.productUseCase.GetProductById(validID)
 
+	if product == nil {
+		response := model.Response{
+			Message: "Product not found",
+		}
+		ctx.JSON(http.StatusNotFound, response)
+		return
+	}
+
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
