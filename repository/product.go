@@ -62,7 +62,7 @@ func (pr *ProductRepository) CreateProduct(product model.Product) (int, error) {
 }
 
 func (pr *ProductRepository) GetProductById(id int) (*model.Product, error) {
-	query, err := pr.connection.Prepare("SELECT * FROM products WHERE id = $1;")
+	query, err := pr.connection.Prepare("SELECT * FROM product WHERE id = $1;")
 	var product model.Product
 
 	if err != nil {
