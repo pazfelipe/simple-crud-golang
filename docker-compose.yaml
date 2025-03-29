@@ -22,6 +22,16 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
 volumes:
   pgdata: {}
   pgadmin_data: {}
