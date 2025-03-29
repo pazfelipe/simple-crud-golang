@@ -93,3 +93,34 @@ func (c *controller) GetProductById(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, product)
 }
+
+func (c *controller) DeleteProductById(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	if id == "" {
+		response := model.Response{
+			Message: "Product ID is required",
+		}
+		ctx.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	validID, err := strconv.Atoi(id)
+	if err != nil {
+		response := model.Response{
+			Message: "Invalid Product ID",
+		}
+		ctx.JSON(http.StatusBadRequest, response)
+		return
+	}
+	err = c.productUseCase.DeleteProductById(validID)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	ctx.Status(http.StatusNoContent)
+
+}
