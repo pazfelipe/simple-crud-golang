@@ -100,3 +100,16 @@ curl http://localhost:8000/products/1
 ```bash
 curl -X DELETE http://localhost:8000/products/1
 ```
+
+## Future Enhancements
+
+The following features are planned for future implementation:
+
+- Update Product : Add endpoint to update existing products
+- Additional Product Fields :
+  - EAN (European Article Number)
+  - Description
+- Product Images : Create a new table to store product images
+- File Upload : Implement file upload functionality
+- Cloud Storage : Add support for uploading files to Firebase Cloud Storage
+- Authentication : Implement JWT (JSON Web Token) for secure API access
